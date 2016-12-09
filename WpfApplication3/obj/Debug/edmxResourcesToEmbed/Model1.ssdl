@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="reversiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="kupci">
+    <Key>
+      <PropertyRef Name="idbroj" />
+    </Key>
+    <Property Name="idbroj" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ime" Type="char" MaxLength="40" Nullable="false" />
+    <Property Name="jmbg" Type="char" MaxLength="13" Nullable="false" />
+    <Property Name="adresa" Type="char" MaxLength="40" Nullable="false" />
+    <Property Name="mesto" Type="char" MaxLength="25" Nullable="false" />
+    <Property Name="telefon" Type="char" MaxLength="15" Nullable="false" />
+    <Property Name="dug" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="pot" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="saldo" Type="numeric" Precision="13" Scale="2" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="racuni">
+    <Key>
+      <PropertyRef Name="brev" />
+      <PropertyRef Name="datum" />
+    </Key>
+    <Property Name="brev" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="datum" Type="date" Nullable="false" />
+    <Property Name="idbrojk" Type="int" Nullable="false" />
+    <Property Name="idbrojr" Type="int" Nullable="false" />
+    <Property Name="kolu" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="kolv" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="cena" Type="numeric" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="utro" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="roba">
+    <Key>
+      <PropertyRef Name="idbroj" />
+    </Key>
+    <Property Name="idbroj" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="naziv" Type="char" MaxLength="40" Nullable="false" />
+    <Property Name="jm" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="kol" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="zaliha" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="jmi" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="cena" Type="numeric" Precision="9" Scale="2" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'reversi.dbo.viewracuni' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="viewracuni">
+    <Key>
+      <PropertyRef Name="brev" />
+    </Key>
+    <Property Name="brev" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="datum" Type="date" />
+    <Property Name="ime" Type="char" MaxLength="40" />
+    <Property Name="naziv" Type="char" MaxLength="40" />
+    <Property Name="kolu" Type="numeric" Precision="38" Scale="0" />
+    <Property Name="kolv" Type="numeric" Precision="38" Scale="0" />
+    <Property Name="saldo" Type="numeric" Precision="38" Scale="0" />
+    <Property Name="cena" Type="numeric" Precision="9" Scale="2" />
+    <Property Name="utro" Type="numeric" Precision="38" Scale="0" />
+  </EntityType>
+  <Association Name="FK_racuni_kupci">
+    <End Role="kupci" Type="Self.kupci" Multiplicity="1" />
+    <End Role="racuni" Type="Self.racuni" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="kupci">
+        <PropertyRef Name="idbroj" />
+      </Principal>
+      <Dependent Role="racuni">
+        <PropertyRef Name="idbrojk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_racuni_roba">
+    <End Role="roba" Type="Self.roba" Multiplicity="1" />
+    <End Role="racuni" Type="Self.racuni" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roba">
+        <PropertyRef Name="idbroj" />
+      </Principal>
+      <Dependent Role="racuni">
+        <PropertyRef Name="idbrojr" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="reversiModelStoreContainer">
+    <EntitySet Name="kupci" EntityType="Self.kupci" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="racuni" EntityType="Self.racuni" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="roba" EntityType="Self.roba" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="viewracuni" EntityType="Self.viewracuni" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [viewracuni].[brev] AS [brev], 
+    [viewracuni].[datum] AS [datum], 
+    [viewracuni].[ime] AS [ime], 
+    [viewracuni].[naziv] AS [naziv], 
+    [viewracuni].[kolu] AS [kolu], 
+    [viewracuni].[kolv] AS [kolv], 
+    [viewracuni].[saldo] AS [saldo], 
+    [viewracuni].[cena] AS [cena], 
+    [viewracuni].[utro] AS [utro]
+    FROM [dbo].[viewracuni] AS [viewracuni]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_racuni_kupci" Association="Self.FK_racuni_kupci">
+      <End Role="kupci" EntitySet="kupci" />
+      <End Role="racuni" EntitySet="racuni" />
+    </AssociationSet>
+    <AssociationSet Name="FK_racuni_roba" Association="Self.FK_racuni_roba">
+      <End Role="roba" EntitySet="roba" />
+      <End Role="racuni" EntitySet="racuni" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

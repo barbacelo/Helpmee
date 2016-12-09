@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="reversiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="kupci">
+    <Key>
+      <PropertyRef Name="idbroj" />
+    </Key>
+    <Property Name="idbroj" Type="Int32" Nullable="false" />
+    <Property Name="ime" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="jmbg" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="adresa" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="mesto" Type="String" MaxLength="25" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="telefon" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="dug" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="pot" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="saldo" Type="Decimal" Precision="13" Scale="2" />
+    <NavigationProperty Name="racuni" Relationship="reversiModel.FK_racuni_kupci" FromRole="kupci" ToRole="racuni" />
+  </EntityType>
+  <EntityType Name="racuni">
+    <Key>
+      <PropertyRef Name="brev" />
+      <PropertyRef Name="datum" />
+    </Key>
+    <Property Name="brev" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="datum" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="idbrojk" Type="Int32" Nullable="false" />
+    <Property Name="idbrojr" Type="Int32" Nullable="false" />
+    <Property Name="kolu" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="kolv" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="cena" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="utro" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+    <NavigationProperty Name="kupci" Relationship="reversiModel.FK_racuni_kupci" FromRole="racuni" ToRole="kupci" />
+    <NavigationProperty Name="roba" Relationship="reversiModel.FK_racuni_roba" FromRole="racuni" ToRole="roba" />
+  </EntityType>
+  <EntityType Name="roba">
+    <Key>
+      <PropertyRef Name="idbroj" />
+    </Key>
+    <Property Name="idbroj" Type="Int32" Nullable="false" />
+    <Property Name="naziv" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="jm" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="kol" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="zaliha" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="jmi" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="cena" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <NavigationProperty Name="racuni" Relationship="reversiModel.FK_racuni_roba" FromRole="roba" ToRole="racuni" />
+  </EntityType>
+  <EntityContainer Name="reversiEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="kupci" EntityType="Self.kupci" />
+    <EntitySet Name="racuni" EntityType="Self.racuni" />
+    <EntitySet Name="roba" EntityType="Self.roba" />
+    <AssociationSet Name="FK_racuni_kupci" Association="reversiModel.FK_racuni_kupci">
+      <End Role="kupci" EntitySet="kupci" />
+      <End Role="racuni" EntitySet="racuni" />
+    </AssociationSet>
+    <AssociationSet Name="FK_racuni_roba" Association="reversiModel.FK_racuni_roba">
+      <End Role="roba" EntitySet="roba" />
+      <End Role="racuni" EntitySet="racuni" />
+    </AssociationSet>
+    <EntitySet Name="viewracuni" EntityType="reversiModel.viewracuni" />
+  </EntityContainer>
+  <Association Name="FK_racuni_kupci">
+    <End Type="reversiModel.kupci" Role="kupci" Multiplicity="1" />
+    <End Type="reversiModel.racuni" Role="racuni" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="kupci">
+        <PropertyRef Name="idbroj" />
+      </Principal>
+      <Dependent Role="racuni">
+        <PropertyRef Name="idbrojk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_racuni_roba">
+    <End Type="reversiModel.roba" Role="roba" Multiplicity="1" />
+    <End Type="reversiModel.racuni" Role="racuni" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roba">
+        <PropertyRef Name="idbroj" />
+      </Principal>
+      <Dependent Role="racuni">
+        <PropertyRef Name="idbrojr" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="viewracuni">
+    <Key>
+      <PropertyRef Name="brev" />
+    </Key>
+    <Property Name="brev" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="datum" Type="DateTime" Precision="0" />
+    <Property Name="ime" Type="String" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Name="naziv" Type="String" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Name="kolu" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="kolv" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="saldo" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="cena" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="utro" Type="Decimal" Precision="38" Scale="0" />
+  </EntityType>
+</Schema>

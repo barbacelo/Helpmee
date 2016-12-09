@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="reversiModelStoreContainer" CdmEntityContainer="reversiEntities">
+    <EntitySetMapping Name="kupci">
+      <EntityTypeMapping TypeName="reversiModel.kupci">
+        <MappingFragment StoreEntitySet="kupci">
+          <ScalarProperty Name="idbroj" ColumnName="idbroj" />
+          <ScalarProperty Name="ime" ColumnName="ime" />
+          <ScalarProperty Name="jmbg" ColumnName="jmbg" />
+          <ScalarProperty Name="adresa" ColumnName="adresa" />
+          <ScalarProperty Name="mesto" ColumnName="mesto" />
+          <ScalarProperty Name="telefon" ColumnName="telefon" />
+          <ScalarProperty Name="dug" ColumnName="dug" />
+          <ScalarProperty Name="pot" ColumnName="pot" />
+          <ScalarProperty Name="saldo" ColumnName="saldo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="racuni">
+      <EntityTypeMapping TypeName="reversiModel.racuni">
+        <MappingFragment StoreEntitySet="racuni">
+          <ScalarProperty Name="brev" ColumnName="brev" />
+          <ScalarProperty Name="datum" ColumnName="datum" />
+          <ScalarProperty Name="idbrojk" ColumnName="idbrojk" />
+          <ScalarProperty Name="idbrojr" ColumnName="idbrojr" />
+          <ScalarProperty Name="kolu" ColumnName="kolu" />
+          <ScalarProperty Name="kolv" ColumnName="kolv" />
+          <ScalarProperty Name="cena" ColumnName="cena" />
+          <ScalarProperty Name="utro" ColumnName="utro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roba">
+      <EntityTypeMapping TypeName="reversiModel.roba">
+        <MappingFragment StoreEntitySet="roba">
+          <ScalarProperty Name="idbroj" ColumnName="idbroj" />
+          <ScalarProperty Name="naziv" ColumnName="naziv" />
+          <ScalarProperty Name="jm" ColumnName="jm" />
+          <ScalarProperty Name="kol" ColumnName="kol" />
+          <ScalarProperty Name="zaliha" ColumnName="zaliha" />
+          <ScalarProperty Name="jmi" ColumnName="jmi" />
+          <ScalarProperty Name="cena" ColumnName="cena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="viewracuni">
+      <EntityTypeMapping TypeName="reversiModel.viewracuni">
+        <MappingFragment StoreEntitySet="viewracuni">
+          <ScalarProperty Name="utro" ColumnName="utro" />
+          <ScalarProperty Name="cena" ColumnName="cena" />
+          <ScalarProperty Name="saldo" ColumnName="saldo" />
+          <ScalarProperty Name="kolv" ColumnName="kolv" />
+          <ScalarProperty Name="kolu" ColumnName="kolu" />
+          <ScalarProperty Name="naziv" ColumnName="naziv" />
+          <ScalarProperty Name="ime" ColumnName="ime" />
+          <ScalarProperty Name="datum" ColumnName="datum" />
+          <ScalarProperty Name="brev" ColumnName="brev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
