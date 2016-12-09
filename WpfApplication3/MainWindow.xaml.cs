@@ -22,20 +22,18 @@ namespace WpfApplication3
     public partial class MainWindow : Window
     {
         reversiEntities context = new reversiEntities();
-        CollectionViewSource kupciViewSource;
         CollectionViewSource racuniViewSource;
         CollectionViewSource robaViewSource;
         CollectionViewSource viewracuniViewSource;
         public MainWindow()
         {
             InitializeComponent();
-            kupciViewSource = ((CollectionViewSource)(FindResource("kupciViewSource")));
             robaViewSource = ((CollectionViewSource)(FindResource("robaViewSource")));
             racuniViewSource = ((CollectionViewSource)(FindResource("racuniViewSource")));
             viewracuniViewSource = ((CollectionViewSource)(FindResource("viewracuniViewSource")));
-            DataContext = this;
-            
-            
+            DataContext = new MainViewModel();
+
+
         }
         private void kupciDataGrid_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -111,12 +109,12 @@ namespace WpfApplication3
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            context.kupci.Load();
+ 
             context.racuni.Load();
             context.roba.Load();
             context.viewracuni.Load();
 
-            kupciViewSource.Source = context.kupci.Local;
+  
             robaViewSource.Source = context.roba.Local;
             racuniViewSource.Source = context.racuni.Local;
             viewracuniViewSource.Source = context.viewracuni.Local;            

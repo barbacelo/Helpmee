@@ -8,7 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" Loaded="Window_Loaded" WindowState="Maximized">
     <Window.Resources>
-        <CollectionViewSource x:Key="kupciViewSource" d:DesignSource="{d:DesignInstance {x:Type local:kupci}, CreateList=True}"/>
         <CollectionViewSource x:Key="racuniViewSource" d:DesignSource="{d:DesignInstance {x:Type local:racuni}, CreateList=True}"/>
         <CollectionViewSource x:Key="robaViewSource" d:DesignSource="{d:DesignInstance {x:Type local:roba}, CreateList=True}"/>
         <CollectionViewSource x:Key="viewracuniViewSource" d:DesignSource="{d:DesignInstance {x:Type local:viewracuni}, CreateList=True}"/>
@@ -20,7 +19,7 @@
             <ColumnDefinition Width="351*" />
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-        <Grid DataContext="{StaticResource kupciViewSource}">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="5" />
@@ -301,7 +300,7 @@
                     </Button>
                 </ToolBar>
             </ToolBarTray>
-            <DataGrid x:Name="kupciDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource kupciViewSource}}" SelectionMode="Extended" Margin="0,30,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" CanUserDeleteRows="True" LostFocus="kupciDataGrid_LostFocus">
+            <DataGrid x:Name="kupciDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Kupcis}" SelectionMode="Extended" Margin="0,30,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" CanUserDeleteRows="True" LostFocus="kupciDataGrid_LostFocus">
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Style.Triggers>
