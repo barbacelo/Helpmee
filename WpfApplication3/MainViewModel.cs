@@ -15,9 +15,10 @@ namespace WpfApplication3
 {
     public class MainViewModel : ViewModelBase
     {
-        private ObservableCollection<kupci> _kupcis;
+        public ICommand SaveCommand => new RelayCommand(Save);
 
-        public ObservableCollection<kupci> Kupcis
+        private ObservableCollection<KupciViewModel> _kupcis;
+        public ObservableCollection<KupciViewModel> Kupcis
         {
             get { return _kupcis; }
             set
@@ -27,11 +28,19 @@ namespace WpfApplication3
             }
         }
 
+        private readonly DAL _dal;
+
         public MainViewModel()
         {
-            var dal = new DataAcess();
+            _dal = new DAL();
 
-            Kupcis = new ObservableCollection<kupci>(dal.GetKupci());
+            Kupcis = new ObservableCollection<KupciViewModel>(_dal.GetKupci().Select(x => new KupciViewModel(x)));
+        }
+
+        private void Save()
+        {
+            foreach (var k in Kupcis)
+                _dal.Save(k.GetModel());
         }
     }
 }

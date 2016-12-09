@@ -12,7 +12,7 @@
         <CollectionViewSource x:Key="robaViewSource" d:DesignSource="{d:DesignInstance {x:Type local:roba}, CreateList=True}"/>
         <CollectionViewSource x:Key="viewracuniViewSource" d:DesignSource="{d:DesignInstance {x:Type local:viewracuni}, CreateList=True}"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource racuniViewSource}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="154*" />
             <ColumnDefinition Width="5" />
@@ -57,7 +57,7 @@
                             </Rectangle>
                         </Viewbox>
                     </Button>
-                    <Button x:Name="SnimiKupci" ToolTip="Sačuvaj promene kupaca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Click="SnimiKupciHandler" IsEnabled="False">
+                    <Button x:Name="SnimiKupci" ToolTip="Sačuvaj promene kupaca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding SaveCommand}" IsEnabled="False">
                         <StackPanel>
                             <Image Source="Resources/Save.png">
                                 <Image.Style>

@@ -92,6 +92,7 @@
     <Compile Include="kupci.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="KupciView.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Model1.cs">
       <AutoGen>True</AutoGen>
