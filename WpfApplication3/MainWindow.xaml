@@ -28,7 +28,7 @@
             <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
             <ToolBarTray HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="156">
                 <ToolBar x:Name="toolBar" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="259" Margin="0,0,-235,-7">
-                    <Button x:Name="DodajKupca" ToolTip="Dodaj kupca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Click="DodajKupcaHandler">
+                    <Button x:Name="DodajKupca" ToolTip="Dodaj kupca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding Kupcis.AddCommand}" CommandParameter="{Binding ElementName=kupciDataGrid}">
                         <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Style>
@@ -57,7 +57,7 @@
                             </Rectangle>
                         </Viewbox>
                     </Button>
-                    <Button x:Name="SnimiKupci" ToolTip="Sačuvaj promene kupaca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding SaveCommand}" IsEnabled="False">
+                    <Button x:Name="SnimiKupci" ToolTip="Sačuvaj promene kupaca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding Kupcis.SaveCommand}">
                         <StackPanel>
                             <Image Source="Resources/Save.png">
                                 <Image.Style>
@@ -95,9 +95,18 @@
                             </Rectangle>
                         </Viewbox>
                     </Button>
-                    <Button x:Name="BrisiKupca" ToolTip="Obriši kupca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,0,-5" Click="BrisiKupcaHandler">
+                    <Button x:Name="BrisiKupca" ToolTip="Obriši kupca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,0,-5" Command="{Binding Kupcis.DeleteCommand}">
                         <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="16" Height="16">
+                                <Rectangle.Style>
+                                    <Style TargetType="Rectangle">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Opacity" Value="0.3" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
                                 <Rectangle.Fill>
                                     <DrawingBrush>
                                         <DrawingBrush.Drawing>
@@ -232,7 +241,7 @@
                             </Rectangle>
                         </Viewbox>
                     </Button>
-                    <Button x:Name="brisiRobu" ToolTip="Obriši robu" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,0,-5">
+                    <Button x:Name="BrisiRobu" ToolTip="Obriši kupca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,0,-5" Command="{Binding Robas.DeleteCommand}">
                         <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Fill>
@@ -300,16 +309,27 @@
                     </Button>
                 </ToolBar>
             </ToolBarTray>
-            <DataGrid x:Name="kupciDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Kupcis}" SelectionMode="Extended" Margin="0,30,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" CanUserDeleteRows="True" LostFocus="kupciDataGrid_LostFocus">
-                <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}">
+            <DataGrid Grid.Row="0" x:Name="kupciDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Kupcis.Kupcis}" SelectedItem="{Binding Kupcis.SelectedKupci, Mode=TwoWay}" SelectionMode="Extended" Margin="0,30,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsDeleted}" Value="True">
-                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Background" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{local:DeletedAndSelectedConverter}">
+                                        <Binding Path="IsDeleted"/>
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="IsSelected" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <DataTrigger.Setters>
+                                    <Setter Property="Background" Value="DarkRed"/>
+                                </DataTrigger.Setters>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </DataGrid.RowStyle>
+                </DataGrid.CellStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="imeColumn" Binding="{Binding ime}" Header="ime" Width="*" MinWidth="130"/>
                     <DataGridTextColumn x:Name="adresaColumn" Binding="{Binding adresa}" Header="adresa" Width="*" MinWidth="200"/>
@@ -321,7 +341,27 @@
                     <DataGridTextColumn x:Name="saldoColumn" Binding="{Binding saldo}" Header="saldo" Width="*" MinWidth="80"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid x:Name="robaDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource robaViewSource}}" SelectionUnit="Cell" Margin="0,30,0,0" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" LostFocus="robaDataGrid_LostFocus">
+            <DataGrid x:Name="robaDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Robas.Robas}" SelectedItem="{Binding Robas.SelectedRoba, Mode=TwoWay}" SelectionMode="Extended" Margin="0,30,0,0" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" >
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDeleted}" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{local:DeletedAndSelectedConverter}">
+                                        <Binding Path="IsDeleted"/>
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="IsSelected" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <DataTrigger.Setters>
+                                    <Setter Property="Background" Value="DarkRed"/>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="nazivColumn" Binding="{Binding naziv}" Header="naziv" Width="*" MinWidth="130"/>
                     <DataGridTextColumn x:Name="jmColumn" Binding="{Binding jm}" Header="jm" Width="*" MinWidth="30"/>

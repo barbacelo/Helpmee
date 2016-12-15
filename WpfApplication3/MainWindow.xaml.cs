@@ -23,60 +23,13 @@ namespace WpfApplication3
     {
         reversiEntities context = new reversiEntities();
         CollectionViewSource racuniViewSource;
-        CollectionViewSource robaViewSource;
         CollectionViewSource viewracuniViewSource;
         public MainWindow()
         {
             InitializeComponent();
-            robaViewSource = ((CollectionViewSource)(FindResource("robaViewSource")));
             racuniViewSource = ((CollectionViewSource)(FindResource("racuniViewSource")));
             viewracuniViewSource = ((CollectionViewSource)(FindResource("viewracuniViewSource")));
             DataContext = new MainViewModel();
-
-
-        }
-        private void kupciDataGrid_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (!kupciDataGrid.IsKeyboardFocusWithin && kupciDataGrid.CanUserAddRows)
-            {
-                kupciDataGrid.CanUserAddRows = false;
-            }
-        }
-
-
-        private void DodajKupcaHandler(object sender, RoutedEventArgs e)
-        {
-            int brojkupaca = context.kupci.ToList().Count;
-            kupciDataGrid.SelectionUnit = DataGridSelectionUnit.Cell;
-            kupciDataGrid.CanUserAddRows = true;
-            kupciDataGrid.Focus();            
-            kupciDataGrid.CurrentCell = new DataGridCellInfo(kupciDataGrid.Items[brojkupaca], kupciDataGrid.Columns[0]);
-      //      kupciDataGrid.SelectedCells.Add(kupciDataGrid.CurrentCell);
-            kupciDataGrid.BeginEdit();
-            kupciDataGrid.SelectionUnit = DataGridSelectionUnit.FullRow;
-            DodajKupca.IsEnabled = false;
-            SnimiKupci.IsEnabled = true;
-        }
-        private void SnimiKupciHandler(object sender, RoutedEventArgs e)
-        {
-      //      using (var kupcicontext = new reversiEntities())
-            DodajKupca.IsEnabled = true;
-            SnimiKupci.IsEnabled = false;
-            
-            context.SaveChanges();
-            var keyEventArgs = new KeyEventArgs(InputManager.Current.PrimaryKeyboardDevice, PresentationSource.FromDependencyObject(kupciDataGrid), System.Environment.ProcessorCount, Key.Return);
-            keyEventArgs.RoutedEvent = UIElement.KeyDownEvent;
-            kupciDataGrid.RaiseEvent(keyEventArgs);
-            kupciDataGrid.CanUserAddRows = false;
-        }
-        private void BrisiKupcaHandler(object sender, RoutedEventArgs e)
-        {
-            kupci currentIndex = kupciDataGrid.SelectedItem as kupci;
-            //  if (currentIndex != null)
-            //   {
-            context.kupci.Remove(currentIndex);
-       //     } 
-       //     kupciDataGrid.SelectedCells[0].Item as DataGridRow;
         }
         private void DodajRobuHandler(object sender, RoutedEventArgs e)
         {
@@ -111,11 +64,9 @@ namespace WpfApplication3
         {
  
             context.racuni.Load();
-            context.roba.Load();
             context.viewracuni.Load();
 
   
-            robaViewSource.Source = context.roba.Local;
             racuniViewSource.Source = context.racuni.Local;
             viewracuniViewSource.Source = context.viewracuni.Local;            
         }
