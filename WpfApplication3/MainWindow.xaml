@@ -7,11 +7,6 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" x:Class="WpfApplication3.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" Loaded="Window_Loaded" WindowState="Maximized">
-    <Window.Resources>
-        <CollectionViewSource x:Key="racuniViewSource" d:DesignSource="{d:DesignInstance {x:Type local:racuni}, CreateList=True}"/>
-        <CollectionViewSource x:Key="robaViewSource" d:DesignSource="{d:DesignInstance {x:Type local:roba}, CreateList=True}"/>
-        <CollectionViewSource x:Key="viewracuniViewSource" d:DesignSource="{d:DesignInstance {x:Type local:viewracuni}, CreateList=True}"/>
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="154*" />
