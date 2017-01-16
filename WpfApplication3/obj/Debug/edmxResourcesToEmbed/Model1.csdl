@@ -40,7 +40,6 @@
     <Property Name="jm" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="kol" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
     <Property Name="zaliha" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
-    <Property Name="jmi" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="cena" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
     <NavigationProperty Name="racuni" Relationship="reversiModel.FK_racuni_roba" FromRole="roba" ToRole="racuni" />
   </EntityType>

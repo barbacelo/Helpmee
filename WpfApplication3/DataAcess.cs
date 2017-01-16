@@ -25,13 +25,24 @@ namespace WpfApplication3
                 _context.roba.Remove(roba);
         }
 
+        public void DeleteRacuni(racuni racuni)
+        {
+            var existing = _context.racuni.FirstOrDefault(x => x.brev == racuni.brev);
+
+            if (existing != null)
+                _context.racuni.Remove(racuni);
+        }
+
         private readonly reversiEntities _context = new reversiEntities();
 
         public DAL()
         {
 
         }
-
+        public List<racuni> GetRacuni()
+        {
+            return _context.Set<racuni>().ToList();
+        }
         public List<kupci> GetKupci()
         {
             return _context.Set<kupci>().ToList();
@@ -40,7 +51,11 @@ namespace WpfApplication3
         {
             return _context.Set<roba>().ToList();
         }
-        public void Save(kupci kupci)
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+        public void SaveKupci(kupci kupci)
         {
             try
             {
@@ -51,7 +66,6 @@ namespace WpfApplication3
                 else
                     _context.Entry(existing).CurrentValues.SetValues(kupci);
 
-                _context.SaveChanges();
             }
             catch (DbEntityValidationException dbx)
             {
@@ -74,7 +88,28 @@ namespace WpfApplication3
                 else
                     _context.Entry(existing).CurrentValues.SetValues(roba);
 
-                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException dbx)
+            {
+                foreach (var er in dbx.EntityValidationErrors)
+                    MessageBox.Show(string.Join(Environment.NewLine, er.ValidationErrors.Select(x => x.PropertyName + ": " + x.ErrorMessage)));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public void SaveRacuni(racuni racuni)
+        {
+            try
+            {
+                var existing = _context.racuni.FirstOrDefault(x => x.brev == racuni.brev);
+
+                if (existing == null)
+                    _context.racuni.Add(racuni);
+                else
+                    _context.Entry(existing).CurrentValues.SetValues(racuni);
+
             }
             catch (DbEntityValidationException dbx)
             {

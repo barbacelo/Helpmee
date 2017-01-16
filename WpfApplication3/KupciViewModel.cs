@@ -158,7 +158,6 @@ namespace WpfApplication3
             {
                 _isDeleted = value;
                 RaisePropertyChanged();
-                Changed = true;
             }
         }
 

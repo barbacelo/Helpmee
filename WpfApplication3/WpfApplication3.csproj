@@ -104,6 +104,8 @@
     <Compile Include="racuni.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="RacunisViewModel.cs" />
+    <Compile Include="RacuniViewModel.cs" />
     <Compile Include="roba.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

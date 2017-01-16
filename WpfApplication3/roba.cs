@@ -25,7 +25,6 @@ namespace WpfApplication3
         public string jm { get; set; }
         public decimal kol { get; set; }
         public decimal zaliha { get; set; }
-        public string jmi { get; set; }
         public decimal cena { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

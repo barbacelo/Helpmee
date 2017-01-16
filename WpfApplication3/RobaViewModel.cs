@@ -16,7 +16,6 @@ namespace WpfApplication3
         private string _jm;
         private decimal _kol;
         private decimal _zaliha;
-        private string _jmi;
         private decimal _cena;
 
         public bool Changed { get; set; }
@@ -69,17 +68,7 @@ namespace WpfApplication3
                 RaisePropertyChanged();
                 Changed = true;
             }
-        }
-        public string jmi
-        {
-            get { return _jmi; }
-            set
-            {
-                _jmi = value;
-                RaisePropertyChanged();
-                Changed = true;
-            }
-        }
+        }        
         public decimal cena
         {
             get { return _cena; }
@@ -106,7 +95,6 @@ namespace WpfApplication3
             jm = k.jm;
             kol = k.kol;
             zaliha = k.zaliha;
-            jmi = k.jmi;
             cena = k.cena;
 
             Changed = false;
@@ -119,7 +107,6 @@ namespace WpfApplication3
             _model.jm = jm;
             _model.kol = kol;
             _model.zaliha = zaliha;
-            _model.jmi = jmi;
             _model.cena = cena;
 
             return _model;
@@ -132,7 +119,6 @@ namespace WpfApplication3
             {
                 _isDeleted = value;
                 RaisePropertyChanged();
-                Changed = true;
             }
         }
 

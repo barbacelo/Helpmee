@@ -124,7 +124,7 @@
                             </Rectangle>
                         </Viewbox>
                     </Button>
-                    <Button x:Name="UndoKupci" ToolTip="Poništi izmenu" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" IsEnabled="False">
+                    <Button x:Name="UndoKupci" ToolTip="Poništi izmenu" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding Kupcis.UndoCommand}">
                         <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="64" Height="64">
                                 <Rectangle.Style>
@@ -174,7 +174,7 @@
             </ToolBarTray>
             <ToolBarTray HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="156" Grid.Row="2">
                 <ToolBar x:Name="toolBar1" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="259" Margin="0,0,-235,-7">
-                    <Button x:Name="DodajRobu" ToolTip="Dodaj robu" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Click="DodajRobuHandler">
+                    <Button x:Name="DodajRobu" ToolTip="Dodaj robu" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding Robas.AddCommand}" CommandParameter="{Binding ElementName=robaDataGrid}">
                         <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Style>
@@ -203,7 +203,7 @@
                             </Rectangle>
                         </Viewbox>
                     </Button>
-                    <Button x:Name="SnimiRobu" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" IsEnabled="False" Click="SnimiRobuHandler">
+                    <Button x:Name="SnimiRobu" ToolTip="Sačuvaj promene kupaca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding Robas.SaveCommand}">
                         <StackPanel>
                             <Image Source="Resources/Save.png">
                                 <Image.Style>
@@ -244,6 +244,15 @@
                     <Button x:Name="BrisiRobu" ToolTip="Obriši kupca" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,0,-5" Command="{Binding Robas.DeleteCommand}">
                         <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="16" Height="16">
+                                <Rectangle.Style>
+                                    <Style TargetType="Rectangle">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Opacity" Value="0.3" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
                                 <Rectangle.Fill>
                                     <DrawingBrush>
                                         <DrawingBrush.Drawing>
@@ -261,7 +270,7 @@
                             </Rectangle>
                         </Viewbox>
                     </Button>
-                    <Button x:Name="UndoRoba" ToolTip="Poništi izmenu" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" IsEnabled="False">
+                    <Button x:Name="UndoRoba" ToolTip="Poništi izmenu" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding Robas.UndoCommand}">
                         <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="64" Height="64">
                                 <Rectangle.Style>
@@ -366,7 +375,6 @@
                     <DataGridTextColumn x:Name="nazivColumn" Binding="{Binding naziv}" Header="naziv" Width="*" MinWidth="130"/>
                     <DataGridTextColumn x:Name="jmColumn" Binding="{Binding jm}" Header="jm" Width="*" MinWidth="30"/>
                     <DataGridTextColumn x:Name="kolColumn" Binding="{Binding kol}" Header="kol" Width="*" MinWidth="40"/>
-                    <DataGridTextColumn x:Name="jmiColumn" Binding="{Binding jmi}" Header="jmi" Width="*" MinWidth="30"/>
                     <DataGridTextColumn x:Name="cenaColumn1" Binding="{Binding cena}" Header="cena" Width="*" MinWidth="100"/>
                     <DataGridTextColumn x:Name="zalihaColumn" Binding="{Binding zaliha}" Header="zaliha" Width="*" MinWidth="50"/>
                 </DataGrid.Columns>
@@ -382,51 +390,31 @@
         </ToolBarTray>
         <TabControl x:Name="tabControl" Grid.Column="2" Margin="0,35,0,-5">
             <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="viewracuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource viewracuniViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="brev" Binding="{Binding brev}" Header="brev" Width="*"/>
-                            <DataGridTemplateColumn x:Name="datum" Header="datum" Width="*" MinWidth="85">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding datum, ConverterCulture=sr-Latn-RS, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn x:Name="ime" Binding="{Binding ime}" Header="ime" Width="*"/>
-                            <DataGridTextColumn x:Name="naziv" Binding="{Binding naziv}" Header="naziv" Width="*"/>
-                            <DataGridTextColumn x:Name="kolu" Binding="{Binding kolu}" Header="kolu" Width="*"/>
-                            <DataGridTextColumn x:Name="kolv" Binding="{Binding kolv}" Header="kolv" Width="*"/>
-                            <DataGridTextColumn x:Name="saldo" Binding="{Binding saldo}" Header="saldo" Width="*"/>
-                            <DataGridTextColumn x:Name="cena" Binding="{Binding cena}" Header="cena" Width="*"/>
-                            <DataGridTextColumn x:Name="utro" Binding="{Binding utro}" Header="utro" Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="TabItem" Margin="-2,-2,2,-1">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="racuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="brevColumn" Binding="{Binding brev}" Header="brev" Width="40"/>
-                            <DataGridTemplateColumn x:Name="datumColumn" Header="datum" Width="*" MinWidth="85">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding datum, ConverterCulture=sr-Latn-RS, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn x:Name="kupciimeColumn" Binding="{Binding kupci.ime}" Header="ime" Width="*" MinWidth="130"/>
-                            <DataGridTextColumn x:Name="nazivrobeColumn" Binding="{Binding roba.naziv}" Header="naziv" Width="*" MinWidth="130"/>
-                            <DataGridTextColumn x:Name="koluColumn" Binding="{Binding kolu}" Header="kolu" Width="*" MinWidth="90"/>
-                            <DataGridTextColumn x:Name="cenaColumn" Binding="{Binding cena}" Header="cena" Width="*" MinWidth="100"/>
-                            <DataGridTextColumn x:Name="kolvColumn" Binding="{Binding kolv}" Header="kolv" Width="*" MinWidth="90"/>
-                            <DataGridTextColumn x:Name="utroColumn" Binding="{Binding utro}" Header="utro" Width="*" MinWidth="50"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
                 </Grid>
             </TabItem>
         </TabControl>
+        <DataGrid x:Name="racuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Racunis.Racunis}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,61,0,-5" Grid.Column="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="brevColumn" Binding="{Binding brev}" Header="brev" Width="40"/>
+                <DataGridTemplateColumn x:Name="datumColumn" Header="datum" Width="*" MinWidth="85">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding datum, ConverterCulture=sr-Latn-RS, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="kupciimeColumn" Binding="{Binding kupci.ime}" Header="ime" Width="*" MinWidth="130"/>
+                <DataGridTextColumn x:Name="nazivrobeColumn" Binding="{Binding roba.naziv}" Header="naziv" Width="*" MinWidth="130"/>
+                <DataGridTextColumn x:Name="koluColumn" Binding="{Binding kolu}" Header="kolu" Width="*" MinWidth="90"/>
+                <DataGridTextColumn x:Name="cenaColumn" Binding="{Binding cena}" Header="cena" Width="*" MinWidth="100"/>
+                <DataGridTextColumn x:Name="kolvColumn" Binding="{Binding kolv}" Header="kolv" Width="*" MinWidth="90"/>
+                <DataGridTextColumn x:Name="utroColumn" Binding="{Binding utro}" Header="utro" Width="*" MinWidth="50"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Label x:Name="brojRacuna" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="264,35,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

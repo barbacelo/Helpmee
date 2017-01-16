@@ -16,6 +16,7 @@ namespace WpfApplication3
         public ICommand SaveCommand => new RelayCommand(Save, CanSave);
         public ICommand DeleteCommand => new RelayCommand(Delete, CanDelete);
         public ICommand AddCommand => new RelayCommand<DataGrid>(Add);
+        public ICommand UndoCommand => new RelayCommand(Undo, CanUndo);
 
         public RobaViewModel SelectedRoba
         {
@@ -37,14 +38,14 @@ namespace WpfApplication3
 
         private bool CanSave()
         {
-            return Robas.Any(x => x.Changed);
+            return Robas.Any(x => x.Changed || x.IsDeleted);
         }
 
         private void Save()
         {
             var deleted = new List<RobaViewModel>();
 
-            foreach (var k in Robas.Where(x => x.Changed))
+            foreach (var k in Robas.Where(x => x.Changed || x.IsDeleted))
             {
                 if (k.IsDeleted)
                 {
@@ -57,6 +58,8 @@ namespace WpfApplication3
                     k.Changed = false;
                 }
             }
+
+            _dal.SaveChanges();
 
             foreach (var d in deleted)
                 Robas.Remove(d);
@@ -78,17 +81,40 @@ namespace WpfApplication3
 
             SelectedRoba.IsDeleted = true;
         }
-
         private void Add(DataGrid grid)
         {
-            Robas.Add(new RobaViewModel());
+            var newItem = new RobaViewModel();
+            Robas.Add(newItem);
 
-            var brojrobe = Robas.Count - 1;
+            int idx;
+
+            for (idx = 0; idx < grid.Items.Count; idx++)
+            {
+                if (newItem == grid.Items[idx])
+                    break;
+            }
+
             grid.SelectionUnit = DataGridSelectionUnit.Cell;
             grid.Focus();
-            grid.CurrentCell = new DataGridCellInfo(grid.Items[brojrobe], grid.Columns[0]);
+            grid.CurrentCell = new DataGridCellInfo(grid.Items[idx], grid.Columns[0]);
             grid.BeginEdit();
             grid.SelectionUnit = DataGridSelectionUnit.FullRow;
+        }
+        private bool CanUndo()
+        {
+            if (SelectedRoba == null)
+                return false;
+
+            if (SelectedRoba.IsDeleted)
+                return true;
+
+            return false;
+        }
+        private void Undo()
+        {
+            if (SelectedRoba == null)
+                return;
+            SelectedRoba.IsDeleted = false;
         }
     }
 }
