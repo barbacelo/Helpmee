@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication3"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" x:Class="WpfApplication3.MainWindow"
+        xml:lang="sr-Latn-RS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" Loaded="Window_Loaded" WindowState="Maximized">
+        Title="MainWindow" Height="600" Width="800" Loaded="Window_Loaded" WindowState="Maximized"
+        DataContext="{StaticResource MainViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="154*" />
@@ -367,20 +369,136 @@
                     </Style>
                 </DataGrid.CellStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="nazivColumn" Binding="{Binding naziv}" Header="naziv" Width="*" MinWidth="130"/>
-                    <DataGridTextColumn x:Name="jmColumn" Binding="{Binding jm}" Header="jm" Width="*" MinWidth="30"/>
-                    <DataGridTextColumn x:Name="kolColumn" Binding="{Binding kol}" Header="kol" Width="*" MinWidth="40"/>
-                    <DataGridTextColumn x:Name="cenaColumn1" Binding="{Binding cena}" Header="cena" Width="*" MinWidth="100"/>
-                    <DataGridTextColumn x:Name="zalihaColumn" Binding="{Binding zaliha}" Header="zaliha" Width="*" MinWidth="50"/>
+                    <DataGridTextColumn x:Name="nazivColumn" Binding="{Binding naziv}" Header="Naziv" Width="*" MinWidth="130"/>
+                    <DataGridTextColumn x:Name="jmColumn" Binding="{Binding jm}" Header="Jedinica mere" Width="*" MinWidth="30"/>
+                    <DataGridTextColumn x:Name="kolColumn" Binding="{Binding kol}" Header="Ukupna količina" Width="*" MinWidth="40"/>
+                    <DataGridTextColumn x:Name="cenaColumn1" Binding="{Binding cena}" Header="Cena po danu" Width="*" MinWidth="100"/>
+                    <DataGridTextColumn x:Name="zalihaColumn" Binding="{Binding zaliha}" Header="Trenutna zaliha" Width="*" MinWidth="50"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
         <ToolBarTray HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="157" Grid.Column="2">
-            <ToolBar x:Name="toolBar2" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="157" Margin="0,0,-133,-7">
-                <Button x:Name="button8" Content="Button" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5"/>
-                <Button x:Name="button9" Content="Button" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5"/>
-                <Button x:Name="button10" Content="Button" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5"/>
-                <Button x:Name="button11" Content="Button" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,0,-5"/>
+            <ToolBar x:Name="toolBar2" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="186" Margin="0,0,-133,-7">
+                <Button x:Name="Dodajracuni" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5">
+                    <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <DrawingBrush>
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M16,5.5562L16,14.0002C16,14.9702,15.299,16.0002,13.999,16.0002L6,16.0002C5.03,16.0002,4,15.2992,4,14.0002L4,8.0002 2,8.0002 2,6.0002 0,6.0002 0,2.0002 2,2.0002 2,0.000200000000000422 6,0.000200000000000422 6,2.0002 12.061,2.0002z" />
+                                                <GeometryDrawing Brush="#FF424242" Geometry="F1M13,12L7,12 7,13 13,13z M13,10L7,10 7,11 13,11z M13,8L7,8 7,9 13,9z M10,6L7,6 7,7 10,7z M15,6L15,14C15,14,14.965,15,13.965,15L5.965,15C5.965,15,5,15,5,14L5,8 6,8 6,14 14,14 14,7 11,7 11,4 8,4 8,3 11.641,3z" />
+                                                <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M13,9L7,9 7,8 13,8z M13,11L7,11 7,10 13,10z M13,13L7,13 7,12 13,12z M11,7L11,4 8,4 8,6 10,6 10,7 7,7 7,6 6,6 6,8 6,14 14,14 14,7z" />
+                                                <GeometryDrawing Brush="#FF388A34" Geometry="F1M7,5L5,5 5,7 3,7 3,5 1,5 1,3 3,3 3,1 5,1 5,3 7,3z" />
+                                            </DrawingGroup.Children>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Viewbox>
+                </Button>
+                <Button x:Name="SnimiRacuni" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5">
+                    <StackPanel>
+                        <Image Source="Resources/Save.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.3" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="StampaRacuni" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5">
+                    <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <DrawingBrush>
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1.9998,0.999700000000001L1.9998,5.0007 -0.000199999999999978,5.0007 -0.000199999999999978,13.0007 2.9998,13.0007 2.9998,14.9997 12.9998,14.9997 12.9998,13.0007 15.9998,13.0007 15.9998,5.0007 14.0008,5.0007 14.0008,0.999700000000001z" />
+                                                <GeometryDrawing Brush="#FF414141" Geometry="F1M12,6L4,6 4,3 12,3z M11,13L5,13 5,11 11,11z M5,8L4,8 4,7 5,7z M3,8L2,8 2,7 3,7z M13,6L13,2 3,2 3,6 1.001,6 1.001,12 4,12 4,14 12,14 12,12 15,12 15,6z" />
+                                                <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M2,8L3,8 3,7 2,7z" />
+                                                <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M4,8L5.001,8 5.001,7 4,7z" />
+                                                <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M5,13L11,13 11,11 5,11z" />
+                                                <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M4,6L12,6 12,3 4,3z" />
+                                            </DrawingGroup.Children>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Viewbox>
+                </Button>
+                <Button x:Name="BrisiRacuni" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,0,-5" Command="{Binding Racunis.DeleteCommand}">
+                    <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Style>
+                                <Style TargetType="Rectangle">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.3" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                            <Rectangle.Fill>
+                                <DrawingBrush>
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M4,15C3.03,15,2,14.299,2,13L2,3C2,1.701,3.03,1,4,1L10.061,1 14,4.556 14,13C14,13.97,13.299,15,12,15z" />
+                                                <GeometryDrawing Brush="#FF414141" Geometry="F1M12,13L4,13 4,3 9,3 9,6 12,6z M9.64,2L3.964,2C3.964,2,3,2,3,3L3,13C3,14,3.964,14,3.964,14L11.965,14C12.965,14,13,13,13,13L13,5z" />
+                                                <GeometryDrawing Brush="#FF414141" Geometry="F1M8,6L5,6 5,5 8,5z" />
+                                                <GeometryDrawing Brush="#FF414141" Geometry="F1M11,8L5,8 5,7 11,7z" />
+                                                <GeometryDrawing Brush="#FF414141" Geometry="F1M11,10L5,10 5,9 11,9z" />
+                                                <GeometryDrawing Brush="#FF414141" Geometry="F1M11,12L5,12 5,11 11,11z" />
+                                                <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M11,8L5,8 5,7 11,7z M11,10L5,10 5,9 11,9z M11,12L5,12 5,11 11,11z M5,5L8,5 8,6 5,6z M9,6L9,3 4,3 4,13 12,13 12,6z" />
+                                                <GeometryDrawing Brush="#FFA1260C" Geometry="F1M5.834,4.1294L8.5,1.0004 8.055,1.0004 5.032,3.3754 3.427,1.2234C3.152,0.910400000000001 2.598,0.9524 2.329,1.2234 2.051,1.5014 1.995,1.9984 2.329,2.3364L4.25,4.1294 1.23,6.7854C0.923999999999999,7.0954 0.923999999999999,7.5874 1.23,7.8974 1.537,8.2074 2.021,8.2074 2.329,7.8974L5.042,4.9584 8.605,8.1254 9,8.1254z" />
+                                            </DrawingGroup.Children>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Viewbox>
+                </Button>
+                <Button x:Name="UndoRacuni" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,0,-5" Command="{Binding Racunis.UndoCommand}">
+                    <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Rectangle Width="64" Height="64">
+                            <Rectangle.Style>
+                                <Style TargetType="Rectangle">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.3" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                            <Rectangle.Fill>
+                                <DrawingBrush>
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M36.0186,0C30.3306,0,24.8206,2.027,20.5116,5.699L19.9996,6.137 19.9996,0 14.3306,0 3.9996,10.344 3.9996,32 25.6396,32 40.3466,17.279C42.5496,18.705 44.0066,21.186 44.0066,24 44.0066,26.338 42.9676,28.568 41.1126,30.166L15.7376,52.664 25.7646,64 27.0616,64 51.6166,42.227C56.9446,37.664 59.9986,31.018 59.9986,24 59.9986,10.766 49.2416,0 36.0186,0" />
+                                                <GeometryDrawing Brush="#FF414141" Geometry="F1M36.0186,4C31.2806,4,26.6916,5.689,23.0976,8.752L15.9996,14.768 15.9996,4 7.9996,12 7.9996,20 7.9996,24 7.9996,28 23.9836,28 31.9756,20 22.1826,20 28.2646,14.852C30.4206,13.012 33.1786,12 36.0186,12 42.6276,12 48.0066,17.383 48.0066,24 48.0066,27.508 46.4756,30.83 43.7646,33.158L21.3816,53.008 26.6786,58.992 49.0146,39.188C53.4566,35.383 55.9986,29.846 55.9986,24 55.9986,12.973 47.0346,4 36.0186,4" />
+                                            </DrawingGroup.Children>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Viewbox>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <TabControl x:Name="tabControl" Grid.Column="2" Margin="0,35,0,-5">
@@ -392,18 +510,50 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <DataGrid x:Name="racuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Racunis.Racunis}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,61,0,-5" Grid.Column="2">
+        <DataGrid x:Name="racuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Racunis.Racunis}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,61,0,-5" Grid.Column="2" CanUserAddRows="False">
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsDeleted}" Value="True">
+                            <Setter Property="Background" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Value="True">
+                            <DataTrigger.Binding>
+                                <MultiBinding Converter="{local:DeletedAndSelectedConverter}">
+                                    <Binding Path="IsDeleted"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="IsSelected" />
+                                </MultiBinding>
+                            </DataTrigger.Binding>
+                            <DataTrigger.Setters>
+                                <Setter Property="Background" Value="DarkRed"/>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="brevColumn" Binding="{Binding brev}" Header="brev" Width="40"/>
                 <DataGridTemplateColumn x:Name="datumColumn" Header="datum" Width="*" MinWidth="85">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding datum, ConverterCulture=sr-Latn-RS, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <DatePicker SelectedDate="{Binding datum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
+                                <DatePicker.Resources>
+                                   <Style TargetType="{x:Type DatePickerTextBox}">
+                                    <Setter Property="Control.Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <TextBox x:Name="PART_TextBox" Text="{Binding Path=SelectedDate, StringFormat='dd.MM.yyyy',RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                              </DatePicker.Resources>
+                            </DatePicker>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn x:Name="kupciimeColumn" Binding="{Binding kupci.ime}" Header="ime" Width="*" MinWidth="130"/>
-                <DataGridTextColumn x:Name="nazivrobeColumn" Binding="{Binding roba.naziv}" Header="naziv" Width="*" MinWidth="130"/>
+                <DataGridComboBoxColumn x:Name="imekupciColumn" SelectedItemBinding="{Binding Kupci}" ItemsSource="{Binding Source={StaticResource MainViewModel},Path=Kupcis.Kupcis}" Header="Kupac" Width="*" MinWidth="130"/>
+                <DataGridComboBoxColumn x:Name="nazivrobeColumn" SelectedItemBinding="{Binding Roba}" ItemsSource="{Binding Source={StaticResource MainViewModel},Path=Robas.Robas}" Header="Roba" Width="*" MinWidth="130"/>
                 <DataGridTextColumn x:Name="koluColumn" Binding="{Binding kolu}" Header="kolu" Width="*" MinWidth="90"/>
                 <DataGridTextColumn x:Name="cenaColumn" Binding="{Binding cena}" Header="cena" Width="*" MinWidth="100"/>
                 <DataGridTextColumn x:Name="kolvColumn" Binding="{Binding kolv}" Header="kolv" Width="*" MinWidth="90"/>

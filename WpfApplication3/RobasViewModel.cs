@@ -17,7 +17,6 @@ namespace WpfApplication3
         public ICommand DeleteCommand => new RelayCommand(Delete, CanDelete);
         public ICommand AddCommand => new RelayCommand<DataGrid>(Add);
         public ICommand UndoCommand => new RelayCommand(Undo, CanUndo);
-
         public RobaViewModel SelectedRoba
         {
             get { return _selectedRoba; }

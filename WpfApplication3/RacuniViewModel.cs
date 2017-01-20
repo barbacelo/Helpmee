@@ -14,8 +14,7 @@ namespace WpfApplication3
         private RobaViewModel _roba;
         private string _brev;
         private DateTime _datum;
-        private int _idbrojk;
-        private int _idbrojr;
+        private KupciViewModel _kupci;
         private decimal _kolu;
         private decimal _kolv;
         private decimal _cena;
@@ -30,9 +29,20 @@ namespace WpfApplication3
                 _roba = value;
                 RaisePropertyChanged();
                 Changed = true;
-                idbrojr = _roba.idbroj;
             }
         }
+
+        public KupciViewModel Kupci
+        {
+            get { return _kupci; }
+            set
+            {
+                _kupci = value;
+                RaisePropertyChanged();
+                Changed = true;
+            }
+        }
+
         public string brev
         {
             get { return _brev; }
@@ -49,28 +59,6 @@ namespace WpfApplication3
             set
             {
                 _datum = value;
-                RaisePropertyChanged();
-                Changed = true;
-            }
-        }
-
-        public int idbrojk
-        {
-            get { return _idbrojk; }
-            set
-            {
-                _idbrojk = value;
-                RaisePropertyChanged();
-                Changed = true;
-            }
-        }
-
-        public int idbrojr
-        {
-            get { return _idbrojr; }
-            set
-            {
-                _idbrojr = value;
                 RaisePropertyChanged();
                 Changed = true;
             }
@@ -122,14 +110,14 @@ namespace WpfApplication3
         {
             _model = new racuni();
         }
-        public RacuniViewModel(racuni k)
+        public RacuniViewModel(racuni k, IEnumerable<RobaViewModel> robas, IEnumerable<KupciViewModel> kupcis)
         {
             _model = k;
 
             brev = k.brev;
             datum = k.datum;
-            idbrojk = k.idbrojk;
-            idbrojr = k.idbrojr;
+            Kupci = kupcis.FirstOrDefault(r => r.idbroj == k.idbrojk);
+            Roba = robas.FirstOrDefault(r => r.idbroj == k.idbrojr);
             kolu = k.kolu;
             kolv = k.kolv;
             cena = k.cena;
@@ -142,9 +130,9 @@ namespace WpfApplication3
         public racuni GetModel()
         {
             _model.brev = brev;
-            _model.datum = datum;
-            _model.idbrojk = idbrojk;
-            _model.idbrojr = idbrojr;
+            _model.datum = datum;            
+            _model.idbrojk = Kupci?.idbroj ?? 0;
+            _model.idbrojr = Roba?.idbroj ?? 0;
             _model.kolu = kolu;
             _model.kolv = kolv;
             _model.cena = cena;

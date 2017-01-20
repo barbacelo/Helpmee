@@ -2,6 +2,7 @@
   <Application.Resources>
     <ResourceDictionary>
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:WpfApplication3.ViewModel" />
-    </ResourceDictionary>
+            <local:MainViewModel x:Key="MainViewModel" />
+        </ResourceDictionary>
   </Application.Resources>
 </Application>

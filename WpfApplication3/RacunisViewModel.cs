@@ -29,12 +29,11 @@ namespace WpfApplication3
 
         public ObservableCollection<RacuniViewModel> Racunis { get; }
 
-        public RacunisViewModel(DAL dal)
+        public RacunisViewModel(DAL dal, IEnumerable<RobaViewModel> robas, IEnumerable<KupciViewModel> kupcis)
         {
             _dal = dal;
-            Racunis = new ObservableCollection<RacuniViewModel>(_dal.GetRacuni().Select(x => new RacuniViewModel(x)).ToList());
+            Racunis = new ObservableCollection<RacuniViewModel>(_dal.GetRacuni().Select(x => new RacuniViewModel(x, robas, kupcis)).ToList());
         }
-
         private bool CanSave()
         {
             return Racunis.Any(x => x.Changed || x.IsDeleted);

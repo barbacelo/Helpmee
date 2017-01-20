@@ -11,6 +11,10 @@ namespace WpfApplication3
 
     public class KupciViewModel : ViewModelBase
     {
+        public override string ToString()
+        {
+            return ime;
+        }
         private int _idbroj;
         private string _ime;
         private string _jmbg;

@@ -11,6 +11,12 @@ namespace WpfApplication3
 
     public class RobaViewModel : ViewModelBase
     {
+
+        public override string ToString()
+        {
+            return naziv;
+        }
+
         private int _idbroj;
         private string _naziv;
         private string _jm;
