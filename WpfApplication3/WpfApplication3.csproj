@@ -90,6 +90,9 @@
     </ApplicationDefinition>
     <Compile Include="Converter.cs" />
     <Compile Include="DataAcess.cs" />
+    <Compile Include="EntryFormRacuni.xaml.cs">
+      <DependentUpon>EntryFormRacuni.xaml</DependentUpon>
+    </Compile>
     <Compile Include="kupci.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
     <Compile Include="viewracuni.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Page Include="EntryFormRacuni.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,6 +170,7 @@
     </EntityDeploy>
     <None Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\kupci.datasource" />

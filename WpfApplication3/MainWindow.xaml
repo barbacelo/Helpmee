@@ -510,7 +510,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <DataGrid x:Name="racuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Racunis.Racunis}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,61,0,-5" Grid.Column="2" CanUserAddRows="False">
+        <DataGrid x:Name="racuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Racunis.Racunis}" SelectedItem="{Binding Racunis.SelectedRacuni, Mode=TwoWay}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,61,0,-5" Grid.Column="2" CanUserAddRows="False">
             <DataGrid.CellStyle>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Style.Triggers>

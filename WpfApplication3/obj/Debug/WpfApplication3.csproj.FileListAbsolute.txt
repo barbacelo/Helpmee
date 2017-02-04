@@ -53,3 +53,5 @@ C:\Users\Kavurma\documents\visual studio 2015\Projects\WpfApplication3\WpfApplic
 C:\Users\Kavurma\documents\visual studio 2015\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3.csproj.GenerateResource.Cache
 C:\Users\Kavurma\documents\visual studio 2015\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3.exe
 C:\Users\Kavurma\documents\visual studio 2015\Projects\WpfApplication3\WpfApplication3\obj\Debug\WpfApplication3.pdb
+C:\Users\Kavurma\documents\visual studio 2015\Projects\WpfApplication3\WpfApplication3\obj\Debug\EntryFormRacuni.g.cs
+C:\Users\Kavurma\documents\visual studio 2015\Projects\WpfApplication3\WpfApplication3\obj\Debug\EntryFormRacuni.baml
