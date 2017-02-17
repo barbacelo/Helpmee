@@ -22,6 +22,8 @@ namespace WpfApplication3
         public decimal kolv { get; set; }
         public decimal cena { get; set; }
         public decimal utro { get; set; }
+        public Nullable<int> godina { get; set; }
+        public int pk { get; set; }
     
         public virtual kupci kupci { get; set; }
         public virtual roba roba { get; set; }

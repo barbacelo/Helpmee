@@ -11,6 +11,7 @@
         <AssociationConnector Association="reversiModel.FK_racuni_kupci" />
         <AssociationConnector Association="reversiModel.FK_racuni_roba" />
         <EntityTypeShape EntityType="reversiModel.viewracuni" Width="1.5" PointX="2.25" PointY="5.25" />
+        <EntityTypeShape EntityType="reversiModel.sysdiagrams" Width="1.5" PointX="8.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

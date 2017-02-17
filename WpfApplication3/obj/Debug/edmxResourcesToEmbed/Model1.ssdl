@@ -16,8 +16,7 @@
   </EntityType>
   <EntityType Name="racuni">
     <Key>
-      <PropertyRef Name="brev" />
-      <PropertyRef Name="datum" />
+      <PropertyRef Name="pk" />
     </Key>
     <Property Name="brev" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="datum" Type="date" Nullable="false" />
@@ -27,6 +26,8 @@
     <Property Name="kolv" Type="numeric" Precision="6" Scale="0" Nullable="false" />
     <Property Name="cena" Type="numeric" Precision="9" Scale="2" Nullable="false" />
     <Property Name="utro" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="godina" Type="int" StoreGeneratedPattern="Computed" />
+    <Property Name="pk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="roba">
     <Key>
@@ -38,6 +39,16 @@
     <Property Name="kol" Type="numeric" Precision="6" Scale="0" Nullable="false" />
     <Property Name="zaliha" Type="numeric" Precision="6" Scale="0" Nullable="false" />
     <Property Name="cena" Type="numeric" Precision="9" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'reversi.dbo.viewracuni' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -85,6 +96,7 @@ warning 6002: The table/view 'reversi.dbo.viewracuni' does not have a primary ke
     <EntitySet Name="kupci" EntityType="Self.kupci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="racuni" EntityType="Self.racuni" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="roba" EntityType="Self.roba" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="viewracuni" EntityType="Self.viewracuni" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [viewracuni].[brev] AS [brev], 

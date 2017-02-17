@@ -17,8 +17,7 @@
   </EntityType>
   <EntityType Name="racuni">
     <Key>
-      <PropertyRef Name="brev" />
-      <PropertyRef Name="datum" />
+      <PropertyRef Name="pk" />
     </Key>
     <Property Name="brev" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="datum" Type="DateTime" Nullable="false" Precision="0" />
@@ -30,6 +29,8 @@
     <Property Name="utro" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
     <NavigationProperty Name="kupci" Relationship="reversiModel.FK_racuni_kupci" FromRole="racuni" ToRole="kupci" />
     <NavigationProperty Name="roba" Relationship="reversiModel.FK_racuni_roba" FromRole="racuni" ToRole="roba" />
+    <Property Name="godina" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="roba">
     <Key>
@@ -56,6 +57,7 @@
       <End Role="racuni" EntitySet="racuni" />
     </AssociationSet>
     <EntitySet Name="viewracuni" EntityType="reversiModel.viewracuni" />
+    <EntitySet Name="sysdiagrams" EntityType="reversiModel.sysdiagrams" />
   </EntityContainer>
   <Association Name="FK_racuni_kupci">
     <End Type="reversiModel.kupci" Role="kupci" Multiplicity="1" />
@@ -94,5 +96,15 @@
     <Property Name="saldo" Type="Decimal" Precision="38" Scale="0" />
     <Property Name="cena" Type="Decimal" Precision="9" Scale="2" />
     <Property Name="utro" Type="Decimal" Precision="38" Scale="0" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
 </Schema>

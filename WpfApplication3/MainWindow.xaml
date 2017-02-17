@@ -165,7 +165,7 @@
                                     </DrawingBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                        </Viewbox>                        
+                        </Viewbox>
                     </Button>
                 </ToolBar>
             </ToolBarTray>
@@ -292,7 +292,7 @@
                                     </DrawingBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                        </Viewbox>                        
+                        </Viewbox>
                     </Button>
                     <Button x:Name="FilterRoba" ToolTip="Filter" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5">
                         <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
@@ -379,7 +379,7 @@
         </Grid>
         <ToolBarTray HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="157" Grid.Column="2">
             <ToolBar x:Name="toolBar2" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="186" Margin="0,0,-133,-7">
-                <Button x:Name="Dodajracuni" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5">
+                <Button x:Name="Dodajracuni" Height="30" VerticalAlignment="Top" Width="30" Margin="0,0,4,-5" Command="{Binding Racunis.NewInvoiceCommand}">
                     <Viewbox Width="30" Height="22" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -510,7 +510,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <DataGrid x:Name="racuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Racunis.Racunis}" SelectedItem="{Binding Racunis.SelectedRacuni, Mode=TwoWay}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,61,0,-5" Grid.Column="2" CanUserAddRows="False">
+        <DataGrid x:Name="racuniDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Racunis.Racunis}" SelectedItem="{Binding Racunis.SelectedRacuni, Mode=TwoWay}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="5,61,0,0" Grid.Column="2" CanUserAddRows="False">
             <DataGrid.CellStyle>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Style.Triggers>
@@ -538,16 +538,16 @@
                         <DataTemplate>
                             <DatePicker SelectedDate="{Binding datum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
                                 <DatePicker.Resources>
-                                   <Style TargetType="{x:Type DatePickerTextBox}">
-                                    <Setter Property="Control.Template">
-                                        <Setter.Value>
-                                            <ControlTemplate>
-                                                <TextBox x:Name="PART_TextBox" Text="{Binding Path=SelectedDate, StringFormat='dd.MM.yyyy',RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                              </DatePicker.Resources>
+                                    <Style TargetType="{x:Type DatePickerTextBox}">
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBox x:Name="PART_TextBox" Text="{Binding Path=SelectedDate, StringFormat='dd.MM.yyyy',RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DatePicker.Resources>
                             </DatePicker>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

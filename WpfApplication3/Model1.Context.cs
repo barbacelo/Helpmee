@@ -29,5 +29,6 @@ namespace WpfApplication3
         public virtual DbSet<racuni> racuni { get; set; }
         public virtual DbSet<roba> roba { get; set; }
         public virtual DbSet<viewracuni> viewracuni { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

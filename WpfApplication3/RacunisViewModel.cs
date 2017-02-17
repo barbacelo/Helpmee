@@ -12,11 +12,14 @@ namespace WpfApplication3
     {
         private readonly DAL _dal;
         private RacuniViewModel _selectedRacuni;
+        //private NewInvoiceWindow myWindow { get; set; } = new NewInvoiceWindow();
+
 
         public ICommand SaveCommand => new RelayCommand(Save, CanSave);
         public ICommand DeleteCommand => new RelayCommand(Delete, CanDelete);
         public ICommand AddCommand => new RelayCommand<DataGrid>(Add);
         public ICommand UndoCommand => new RelayCommand(Undo, CanUndo);
+        public ICommand NewInvoiceCommand => new RelayCommand(NewInvoice);
         public RacuniViewModel SelectedRacuni
         {
             get { return _selectedRacuni; }
@@ -59,7 +62,7 @@ namespace WpfApplication3
             _dal.SaveChanges();
             foreach (var d in deleted)
                 Racunis.Remove(d);
-        }
+        }        
         private bool CanDelete()
         {
             if (SelectedRacuni == null)
@@ -112,5 +115,17 @@ namespace WpfApplication3
                 return;
             SelectedRacuni.IsDeleted = false;
         }
+        private void NewInvoice()
+        {
+            var myWindow = new NewInvoiceWindow();
+            myWindow.Show();
+        }
+        //private bool CanNewInvoice()
+        //{
+        //    if (myWindow == null)
+        //        return false;
+
+        //    return true;
+        //}
     }
 }
