@@ -15,9 +15,8 @@ namespace WpfApplication3
             _dal = new DAL();
             Kupcis = new KupcisViewModel(_dal);
             Robas = new RobasViewModel(_dal);
-            Racunis = new RacunisViewModel(_dal, Kupcis.Kupcis);
-            RevRobas = new RevRobasViewModel(_dal, Robas.Robas, Racunis.Racunis);
-            
+            RevRobas = new RevRobasViewModel(_dal, Robas.Robas);
+            Racunis = new RacunisViewModel(_dal, Kupcis.Kupcis, Robas.Robas);
         }
     }
 }

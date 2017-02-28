@@ -20,6 +20,7 @@ namespace WpfApplication3
         public ICommand AddCommand => new RelayCommand<DataGrid>(Add);
         public ICommand UndoCommand => new RelayCommand(Undo, CanUndo);
         public ICommand NewInvoiceCommand => new RelayCommand(NewInvoice, CanNewInvoice);
+
         public RacuniViewModel SelectedRacuni
         {
             get { return _selectedRacuni; }
@@ -32,10 +33,10 @@ namespace WpfApplication3
 
         public ObservableCollection<RacuniViewModel> Racunis { get; }
 
-        public RacunisViewModel(DAL dal, IEnumerable<KupciViewModel> kupcis)
+        public RacunisViewModel(DAL dal, IEnumerable<KupciViewModel> kupcis, IEnumerable<RobaViewModel> robas)
         {
             _dal = dal;
-            Racunis = new ObservableCollection<RacuniViewModel>(_dal.GetRacuni().Select(x => new RacuniViewModel(x, kupcis)).ToList());
+            Racunis = new ObservableCollection<RacuniViewModel>(_dal.GetRacuni().Select(x => new RacuniViewModel(x, kupcis, robas)).ToList());
         }
         private bool CanSave()
         {

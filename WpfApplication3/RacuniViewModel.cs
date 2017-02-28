@@ -1,10 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WpfApplication3;
 
 namespace WpfApplication3
 {
@@ -14,7 +12,8 @@ namespace WpfApplication3
         private string _brev;
         private DateTime _datum;
         private KupciViewModel _kupci;
-        private RevRobaViewModel _revroba;
+        private ObservableCollection<RevRobaViewModel> _revrobas;
+
         public bool Changed { get; set; }
 
         public KupciViewModel Kupci
@@ -28,12 +27,12 @@ namespace WpfApplication3
             }
         }
 
-        public RevRobaViewModel RevRoba
+        public ObservableCollection<RevRobaViewModel> RevRobas
         {
-            get { return _revroba; }
+            get { return _revrobas; }
             set
             {
-                _revroba = value;
+                _revrobas = value;
                 RaisePropertyChanged();
                 Changed = true;
             }
@@ -65,18 +64,22 @@ namespace WpfApplication3
         {
             _model = new racuni();
         }
-        public RacuniViewModel(racuni k, IEnumerable<KupciViewModel> kupcis)
+
+        public RacuniViewModel(racuni k, IEnumerable<KupciViewModel> kupcis, IEnumerable<RobaViewModel> robas)
         {
             _model = k;
 
             brev = k.brev;
             datum = k.datum;
-            Kupci = kupcis.FirstOrDefault(r => r.idbroj == k.idbrojk);            
+            Kupci = kupcis.FirstOrDefault(r => r.idbroj == k.idbrojk);    
+                    
+            RevRobas = new ObservableCollection<RevRobaViewModel>();
+            foreach (var rr in k.revroba)
+                RevRobas.Add(new RevRobaViewModel(rr, robas));
 
             Changed = false;
         }
-
-
+        
         public racuni GetModel()
         {
             _model.brev = brev;

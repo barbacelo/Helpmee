@@ -83,6 +83,7 @@ namespace WpfApplication3
         {
             _model = new revroba();
         }
+
         public RevRobaViewModel(revroba k, IEnumerable<RobaViewModel> robas)
         {
             _model = k;

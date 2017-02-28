@@ -1,10 +1,7 @@
-﻿using GalaSoft.MvvmLight;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WpfApplication3
 {
@@ -24,10 +21,10 @@ namespace WpfApplication3
         }
         public ObservableCollection<RevRobaViewModel> RevRobas { get; }
 
-        public RevRobasViewModel(DAL dal)
+        public RevRobasViewModel(DAL dal, IEnumerable<RobaViewModel> robas)
         {
             _dal = dal;
-            RevRobas = new ObservableCollection<RevRobaViewModel>(_dal.GetRevRoba().Select(x => new RevRobaViewModel(x)).ToList());
+            RevRobas = new ObservableCollection<RevRobaViewModel>(_dal.GetRevRoba().Select(x => new RevRobaViewModel(x, robas)).ToList());
         }
     }
 }
