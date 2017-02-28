@@ -21,13 +21,21 @@
     <Property Name="brev" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="datum" Type="date" Nullable="false" />
     <Property Name="idbrojk" Type="int" Nullable="false" />
-    <Property Name="idbrojr" Type="int" Nullable="false" />
-    <Property Name="kolu" Type="numeric" Precision="6" Scale="0" Nullable="false" />
-    <Property Name="kolv" Type="numeric" Precision="6" Scale="0" Nullable="false" />
-    <Property Name="cena" Type="numeric" Precision="9" Scale="2" Nullable="false" />
-    <Property Name="utro" Type="numeric" Precision="6" Scale="0" Nullable="false" />
     <Property Name="godina" Type="int" StoreGeneratedPattern="Computed" />
     <Property Name="pk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="revroba">
+    <Key>
+      <PropertyRef Name="pk" />
+    </Key>
+    <Property Name="pk" Type="int" Nullable="false" />
+    <Property Name="brev" Type="int" Nullable="false" />
+    <Property Name="datum" Type="date" Nullable="false" />
+    <Property Name="idbrojr" Type="int" Nullable="false" />
+    <Property Name="kolu" Type="numeric" Precision="6" Scale="0" />
+    <Property Name="kolv" Type="numeric" Precision="6" Scale="0" />
+    <Property Name="utro" Type="numeric" Precision="6" Scale="0" />
+    <Property Name="cena" Type="numeric" Precision="9" Scale="2" Nullable="false" />
   </EntityType>
   <EntityType Name="roba">
     <Key>
@@ -50,22 +58,6 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'reversi.dbo.viewracuni' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="viewracuni">
-    <Key>
-      <PropertyRef Name="brev" />
-    </Key>
-    <Property Name="brev" Type="char" MaxLength="10" Nullable="false" />
-    <Property Name="datum" Type="date" />
-    <Property Name="ime" Type="char" MaxLength="40" />
-    <Property Name="naziv" Type="char" MaxLength="40" />
-    <Property Name="kolu" Type="numeric" Precision="38" Scale="0" />
-    <Property Name="kolv" Type="numeric" Precision="38" Scale="0" />
-    <Property Name="saldo" Type="numeric" Precision="38" Scale="0" />
-    <Property Name="cena" Type="numeric" Precision="9" Scale="2" />
-    <Property Name="utro" Type="numeric" Precision="38" Scale="0" />
-  </EntityType>
   <Association Name="FK_racuni_kupci">
     <End Role="kupci" Type="Self.kupci" Multiplicity="1" />
     <End Role="racuni" Type="Self.racuni" Multiplicity="*" />
@@ -78,16 +70,26 @@ warning 6002: The table/view 'reversi.dbo.viewracuni' does not have a primary ke
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_racuni_roba">
-    <End Role="roba" Type="Self.roba" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="racuni" Type="Self.racuni" Multiplicity="*" />
+  <Association Name="FK_RevRoba_Racuni">
+    <End Role="racuni" Type="Self.racuni" Multiplicity="1" />
+    <End Role="revroba" Type="Self.revroba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="racuni">
+        <PropertyRef Name="pk" />
+      </Principal>
+      <Dependent Role="revroba">
+        <PropertyRef Name="brev" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RevRoba_roba">
+    <End Role="roba" Type="Self.roba" Multiplicity="1" />
+    <End Role="revroba" Type="Self.revroba" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="roba">
         <PropertyRef Name="idbroj" />
       </Principal>
-      <Dependent Role="racuni">
+      <Dependent Role="revroba">
         <PropertyRef Name="idbrojr" />
       </Dependent>
     </ReferentialConstraint>
@@ -95,28 +97,20 @@ warning 6002: The table/view 'reversi.dbo.viewracuni' does not have a primary ke
   <EntityContainer Name="reversiModelStoreContainer">
     <EntitySet Name="kupci" EntityType="Self.kupci" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="racuni" EntityType="Self.racuni" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="revroba" EntityType="Self.revroba" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="roba" EntityType="Self.roba" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="viewracuni" EntityType="Self.viewracuni" store:Type="Views" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [viewracuni].[brev] AS [brev], 
-    [viewracuni].[datum] AS [datum], 
-    [viewracuni].[ime] AS [ime], 
-    [viewracuni].[naziv] AS [naziv], 
-    [viewracuni].[kolu] AS [kolu], 
-    [viewracuni].[kolv] AS [kolv], 
-    [viewracuni].[saldo] AS [saldo], 
-    [viewracuni].[cena] AS [cena], 
-    [viewracuni].[utro] AS [utro]
-    FROM [dbo].[viewracuni] AS [viewracuni]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_racuni_kupci" Association="Self.FK_racuni_kupci">
       <End Role="kupci" EntitySet="kupci" />
       <End Role="racuni" EntitySet="racuni" />
     </AssociationSet>
-    <AssociationSet Name="FK_racuni_roba" Association="Self.FK_racuni_roba">
-      <End Role="roba" EntitySet="roba" />
+    <AssociationSet Name="FK_RevRoba_Racuni" Association="Self.FK_RevRoba_Racuni">
       <End Role="racuni" EntitySet="racuni" />
+      <End Role="revroba" EntitySet="revroba" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RevRoba_roba" Association="Self.FK_RevRoba_roba">
+      <End Role="roba" EntitySet="roba" />
+      <End Role="revroba" EntitySet="revroba" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

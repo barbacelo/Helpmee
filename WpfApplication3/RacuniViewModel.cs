@@ -11,26 +11,11 @@ namespace WpfApplication3
 
     public class RacuniViewModel : ViewModelBase
     {
-        private RobaViewModel _roba;
         private string _brev;
         private DateTime _datum;
         private KupciViewModel _kupci;
-        private decimal _kolu;
-        private decimal _kolv;
-        private decimal _cena;
-        private decimal _utro;
-
+        private RevRobaViewModel _revroba;
         public bool Changed { get; set; }
-        public RobaViewModel Roba
-        {
-            get { return _roba; }
-            set
-            {                        
-                _roba = value;
-                RaisePropertyChanged();
-                Changed = true;
-            }
-        }
 
         public KupciViewModel Kupci
         {
@@ -43,6 +28,16 @@ namespace WpfApplication3
             }
         }
 
+        public RevRobaViewModel RevRoba
+        {
+            get { return _revroba; }
+            set
+            {
+                _revroba = value;
+                RaisePropertyChanged();
+                Changed = true;
+            }
+        }
         public string brev
         {
             get { return _brev; }
@@ -63,46 +58,6 @@ namespace WpfApplication3
                 Changed = true;
             }
         }
-        public decimal kolu
-        {
-            get { return _kolu; }
-            set
-            {
-                _kolu = value;
-                RaisePropertyChanged();
-                Changed = true;
-            }
-        }
-        public decimal kolv
-        {
-            get { return _kolv; }
-            set
-            {
-                _kolv = value;
-                RaisePropertyChanged();
-                Changed = true;
-            }
-        }
-        public decimal cena
-        {
-            get { return _cena; }
-            set
-            {
-                _cena = value;
-                RaisePropertyChanged();
-                Changed = true;
-            }
-        }
-        public decimal utro
-        {
-            get { return _utro; }
-            set
-            {
-                _utro = value;
-                RaisePropertyChanged();
-                Changed = true;
-            }
-        }
 
         private readonly racuni _model;
 
@@ -110,18 +65,13 @@ namespace WpfApplication3
         {
             _model = new racuni();
         }
-        public RacuniViewModel(racuni k, IEnumerable<RobaViewModel> robas, IEnumerable<KupciViewModel> kupcis)
+        public RacuniViewModel(racuni k, IEnumerable<KupciViewModel> kupcis)
         {
             _model = k;
 
             brev = k.brev;
             datum = k.datum;
-            Kupci = kupcis.FirstOrDefault(r => r.idbroj == k.idbrojk);
-            Roba = robas.FirstOrDefault(r => r.idbroj == k.idbrojr);
-            kolu = k.kolu;
-            kolv = k.kolv;
-            cena = k.cena;
-            utro = k.utro;
+            Kupci = kupcis.FirstOrDefault(r => r.idbroj == k.idbrojk);            
 
             Changed = false;
         }
@@ -132,11 +82,6 @@ namespace WpfApplication3
             _model.brev = brev;
             _model.datum = datum;            
             _model.idbrojk = Kupci?.idbroj ?? 0;
-            _model.idbrojr = Roba?.idbroj ?? 0;
-            _model.kolu = kolu;
-            _model.kolv = kolv;
-            _model.cena = cena;
-            _model.utro = utro;
 
             return _model;
         }

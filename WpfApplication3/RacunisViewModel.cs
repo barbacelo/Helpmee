@@ -19,7 +19,7 @@ namespace WpfApplication3
         public ICommand DeleteCommand => new RelayCommand(Delete, CanDelete);
         public ICommand AddCommand => new RelayCommand<DataGrid>(Add);
         public ICommand UndoCommand => new RelayCommand(Undo, CanUndo);
-        public ICommand NewInvoiceCommand => new RelayCommand(NewInvoice);
+        public ICommand NewInvoiceCommand => new RelayCommand(NewInvoice, CanNewInvoice);
         public RacuniViewModel SelectedRacuni
         {
             get { return _selectedRacuni; }
@@ -32,10 +32,10 @@ namespace WpfApplication3
 
         public ObservableCollection<RacuniViewModel> Racunis { get; }
 
-        public RacunisViewModel(DAL dal, IEnumerable<RobaViewModel> robas, IEnumerable<KupciViewModel> kupcis)
+        public RacunisViewModel(DAL dal, IEnumerable<KupciViewModel> kupcis)
         {
             _dal = dal;
-            Racunis = new ObservableCollection<RacuniViewModel>(_dal.GetRacuni().Select(x => new RacuniViewModel(x, robas, kupcis)).ToList());
+            Racunis = new ObservableCollection<RacuniViewModel>(_dal.GetRacuni().Select(x => new RacuniViewModel(x, kupcis)).ToList());
         }
         private bool CanSave()
         {
@@ -117,15 +117,15 @@ namespace WpfApplication3
         }
         private void NewInvoice()
         {
-            var myWindow = new NewInvoiceWindow();
-            myWindow.Show();
+            NewInvoiceWindow.ShowSingleWindow();           
         }
-        //private bool CanNewInvoice()
-        //{
-        //    if (myWindow == null)
-        //        return false;
 
-        //    return true;
-        //}
+        private bool CanNewInvoice()
+        {
+            if (NewInvoiceWindow._window == null)
+                return true;
+
+            return false;
+        }
     }
 }

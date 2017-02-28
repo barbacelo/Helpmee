@@ -109,6 +109,11 @@
     </Compile>
     <Compile Include="RacunisViewModel.cs" />
     <Compile Include="RacuniViewModel.cs" />
+    <Compile Include="revroba.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RevRobasViewModel.cs" />
+    <Compile Include="RevRobaViewModel.cs" />
     <Compile Include="roba.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -119,9 +124,6 @@
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="viewracuni.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

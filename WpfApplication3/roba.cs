@@ -17,7 +17,7 @@ namespace WpfApplication3
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public roba()
         {
-            this.racuni = new ObservableCollection<racuni>();
+            this.revroba = new ObservableCollection<revroba>();
         }
     
         public int idbroj { get; set; }
@@ -28,6 +28,6 @@ namespace WpfApplication3
         public decimal cena { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<racuni> racuni { get; set; }
+        public virtual ObservableCollection<revroba> revroba { get; set; }
     }
 }

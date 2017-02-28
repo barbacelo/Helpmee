@@ -51,6 +51,10 @@ namespace WpfApplication3
         {
             return _context.Set<roba>().ToList();
         }
+        public List<revroba> GetRevRoba()
+        {
+            return _context.Set<revroba>().ToList();
+        }
         public void SaveChanges()
         {
             _context.SaveChanges();
